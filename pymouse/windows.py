@@ -31,12 +31,12 @@ class PyMouse(PyMouseMeta):
     def press(self, x, y, button=1):
         buttonAction = 2 ** ((2 * button) - 1)
         self.move(x, y)
-        win32api.mouse_event(buttonAction, x, y)
+        win32api.mouse_event(buttonAction, int(x), int(y))
 
     def release(self, x, y, button=1):
         buttonAction = 2 ** ((2 * button))
         self.move(x, y)
-        win32api.mouse_event(buttonAction, x, y)
+        win32api.mouse_event(buttonAction, int(x), int(y))
 
     def scroll(self, vertical=None, horizontal=None, depth=None):
 
@@ -68,7 +68,8 @@ in Windows. This feature is only available on Mac.')
                     win32api.mouse_event(0x01000, 0, 0, -120, 0)
 
     def move(self, x, y):
-        windll.user32.SetCursorPos(x, y)
+        win32api.SetCursorPos((int(x),int(y)))
+#        windll.user32.SetCursorPos(x, y)
 
     def drag(self, x, y):
         self.press(*self.position())
